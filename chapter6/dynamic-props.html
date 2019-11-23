@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <my-component></my-component>
+        <my-component></my-component>
+        <my-component></my-component>
+    </div>
+    <script>
+        const myComponent = {
+            template: `<div><button @click="counter += 1"> {{ counter }}</button></div>`,
+            data () {
+                return { 
+                    counter: 0 
+                };
+            }
+        };
+
+        new Vue({
+            el: '#app',
+            components: {'my-component': myComponent},
+            data () {
+                return {
+                    message: ''
+                };
+            }
+        });
+    </script>
+</body>
+</html>

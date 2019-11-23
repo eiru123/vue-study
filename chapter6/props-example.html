@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <my-component :num="myNumber" :str="passedString" :even="myNumber" :obj="passedObject"></my-component>
+    </div>
+    <script>
+        const myComponent = {
+            template: `<div>number: {{ num }} <br> string: {{ str }} <br> even? {{ even }} <br> object {{ obj.message }}</div>`,
+            props: {
+                num: {
+                    type: Number,
+                    required: true
+                },
+                str: {
+                    type: String,
+                    default: 'hello'
+                },
+                obj: {
+                    type: Object,
+                    default: () => {
+                        return { message: 'hello, from object' };
+                    }
+                },
+                even: {
+                    // custom validator
+                    validator: function (value) {
+                        console.info(value);
+                        return value % 2 === 0;
+                    }
+                }
+            }
+        };
+
+        new Vue({
+            el: '#app',
+            components: {'my-component': myComponent},
+            data () {
+                return {
+                    passedString: 'hello, from parent',
+                    myNumber: 42,
+                    passedObject: { message: ' passed object' }
+                };
+            }
+        });
+    </script>
+</body>
+</html>
