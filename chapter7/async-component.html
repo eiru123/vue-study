@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <book-component></book-component>
+    </div>
+    <script>
+        const BookComponent = function(resolve, reject) {
+            setTimeout(function () {
+                resolve({
+                    template: `
+                    <div>
+                        <h1>
+                            async component
+                        </h1>
+                    </div>
+                    `
+                });
+            }, 1000);
+        };
+
+        new Vue({
+            el: '#app',
+            components: { BookComponent }
+        });
+    </script>
+</body>
+</html>
