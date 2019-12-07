@@ -23,15 +23,17 @@
                         <button disabled class="btn btn-primary btn-lg" v-else>
                             장바구니 담기
                         </button>
-                        <span class="inventory-message" v-if="product.availableInventory - cartCount(product.id) === 0">
-                            품절!
-                        </span>
-                        <span class="inventory-message" v-else-if="product.availableInventory - cartCount(product.id) < 5">
-                            Only {{ product.availableInventory - cartCount(product.id) }} 남았습니다!
-                        </span>
-                        <span class="inventory-message" v-else>
-                            지금 구매하세요!
-                        </span>
+                        <transition name="bounce" mode="out-in">
+                            <span class="inventory-message" v-if="product.availableInventory - cartCount(product.id) === 0" key="0">
+                                품절!
+                            </span>
+                            <span class="inventory-message" v-else-if="product.availableInventory - cartCount(product.id) < 5" key="">
+                                Only {{ product.availableInventory - cartCount(product.id) }} 남았습니다!
+                            </span>
+                            <span class="inventory-message" v-else key="">
+                                지금 구매하세요!
+                            </span>
+                        </transition>
                         <div class="rating">
                             <span :class="{'rating-active': checkRating(n, product)}" v-for="n in 5" :key="n">☆</span>
                         </div>
@@ -122,5 +124,28 @@ export default {
 </script>
 
 <style>
-    
+.bounce-enter-active {
+    animation: shake 0.72s cubic-bezier(.37, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+}
+
+@keyframes shake {
+    10%, 90% {
+        color: red;
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        color: red;
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
 </style>
